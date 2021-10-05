@@ -5,23 +5,16 @@ from prometheus_client import start_http_server, Gauge
 
 
 def generate_metrics():
-    return [
-        {
-            "name": "Metric1",
-            "description": "Metric1 description",
-            "value": random.randint(0, 100)
-        },
-        {
-            "name": "Metric2",
-            "description": "Metric2 description",
-            "value": random.randint(0, 100)
-        },
-        {
-            "name": "Metric3",
-            "description": "Metric3 description",
-            "value": random.randint(0, 100)
-        }
-    ]
+    metrics = list()
+    for i in range(random.randint(4, 10)):
+        metrics.append(
+            {
+                "name": f"Metric{i}",
+                "description": f"Metric{i} description",
+                "value": random.randint(0, 100)
+            }
+        )
+    return metrics
 
 
 class AppMetrics:
@@ -53,6 +46,7 @@ def main():
     app_metrics = AppMetrics(polling_interval_seconds=5)
     start_http_server(exporter_port)
     app_metrics.run_metrics_loop()
+
 
 if __name__ == "__main__":
     main()
